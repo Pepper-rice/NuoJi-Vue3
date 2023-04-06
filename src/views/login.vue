@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginRef" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">诺机后台管理系统</h3>
       <el-form-item prop="username">
         <el-input
           v-model="loginForm.username"
@@ -40,7 +40,8 @@
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      <div><el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+        <el-button class="aaaaaa"><router-link to="/register">注册</router-link></el-button></div>
       <el-form-item style="width:100%;">
         <el-button
           :loading="loading"
@@ -52,6 +53,7 @@
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
+
         <div style="float: right;" v-if="register">
           <router-link class="link-type" :to="'/register'">立即注册</router-link>
         </div>
@@ -59,7 +61,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2023 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright © 2023 All Rights Reserved.</span>
     </div>
   </div>
 </template>
@@ -151,6 +153,10 @@ getCookie();
 </script>
 
 <style lang='scss' scoped>
+.aaaaaa{
+  margin-left:200px !important;
+  margin-top: -5px !important;
+}
 .login {
   display: flex;
   justify-content: center;

@@ -25,9 +25,9 @@
             <h4>后端技术</h4>
             <ul>
               <li>SpringBoot 2.3.3.RELEASE</li>
-              <li>Spring Security</li>
-              <li>JWT</li>
-              <li>MyBatis</li>
+<!--              <li>Spring Security</li>-->
+<!--              <li>JWT</li>-->
+<!--              <li>MyBatis</li>-->
               <li>Druid 1.1.10</li>
               <li>Fastjson 1.2.83</li>
               <li>...</li>
@@ -37,11 +37,11 @@
             <h4>前端技术</h4>
             <ul>
               <li>Vue3</li>
-              <li>Vuex</li>
-              <li>Element-ui</li>
-              <li>Axios</li>
-              <li>Sass</li>
-              <li>Quill</li>
+<!--              <li>Vuex</li>-->
+<!--              <li>Element-ui</li>-->
+<!--              <li>Axios</li>-->
+<!--              <li>Sass</li>-->
+<!--              <li>Quill</li>-->
               <li>...</li>
             </ul>
           </el-col>
