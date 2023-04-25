@@ -19,14 +19,6 @@
             @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="存储容量" prop="phoneStorage">
-        <el-input
-            v-model="queryParams.phoneStorage"
-            placeholder="请输入存储容量"
-            clearable
-            @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="价格" prop="price">
         <el-input
             v-model="queryParams.price"
@@ -34,8 +26,6 @@
             clearable
             @keyup.enter.native="handleQuery"
         />
-
-
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
@@ -146,6 +136,8 @@
 
 <script setup name="Phone">
 import { listPhone, getPhone, delPhone, addPhone, updatePhone } from "@/api/store/phone";
+import {onMounted ,onUnmounted} from "vue";
+
 
 const { proxy } = getCurrentInstance();
 const { sys_normal_disable } = proxy.useDict("sys_normal_disable");
@@ -161,14 +153,17 @@ const total = ref(0);
 const title = ref("");
 
 const data = reactive({
-  form: {},
+  form: {
+  },
   queryParams: {
     pageNum: 1,
     pageSize: 10,
     phoneCode: undefined,
     phoneName: undefined,
     status: undefined,
-    saleQuantity: undefined
+    saleQuantity: undefined,
+    phoneQuantity: undefined,
+    timer: null
   },
   //表单校验
   rules: {
@@ -176,10 +171,36 @@ const data = reactive({
     phoneBrand: [{ required: true, message: "手机品牌不能为空", trigger: "blur" }],
     phoneStorage: [{ required: true, message: "储存容量不能为空", trigger: "blur" }],
     price: [{ required: true, message: "价格不能为空", trigger: "blur" }],
-  }
+    phoneQuantity: [{ required: true, message: "手机库存不能为空", trigger: "blur" }],
+  },
+
 });
 
+
+
 const { queryParams, form, rules } = toRefs(data);
+
+/** 设置定时器 */
+let timer = null
+onMounted(() => {
+      getList();
+      setTimer();
+    },
+)
+onUnmounted(() =>
+{
+  if (timer) {
+    clearInterval(timer);
+  }
+})
+
+function setTimer() {
+  //在上面的私有变量中定义定时器变量，在这里赋值
+  timer = setInterval(()=>{
+    //任务内容
+    getList();
+    },3000)
+}
 
 /** 查询手机列表 */
 function getList() {
@@ -203,7 +224,8 @@ function reset() {
     phoneName: undefined,
     phoneSort: 0,
     status: "0",
-    remark: undefined
+    remark: undefined,
+    phoneQuantity: undefined
   };
   proxy.resetForm("phoneRef");
 }
@@ -275,6 +297,8 @@ function handleExport() {
     ...queryParams.value
   }, `phone_${new Date().getTime()}.xlsx`);
 }
+
+
 
 getList();
 </script>

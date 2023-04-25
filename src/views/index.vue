@@ -4,10 +4,10 @@
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
         <h2>诺机销售后台管理系统</h2>
         <p>
-          一款手机销售后台管理系统，可以用于所有的Web应用程序，如网站管理后台，网站会员中心，CMS，CRM，OA等等。
+          一款手机销售后台管理系统，可以用于所有的Web应用程序，如网站管理后台，网站用户中心，销售管理等等。
         </p>
         <p>
-          <b>当前版本:</b> <span>v1.0.0</span>
+          <b>当前版本:</b> <span>v2.1.0</span>
         </p>
         <p>
           <el-tag>致宇数据BU-杨寅</el-tag>
@@ -25,11 +25,14 @@
             <h4>后端技术</h4>
             <ul>
               <li>SpringBoot 2.3.3.RELEASE</li>
-<!--              <li>Spring Security</li>-->
-<!--              <li>JWT</li>-->
-<!--              <li>MyBatis</li>-->
-              <li>Druid 1.1.10</li>
+              <li>MyBatis-Plus 3.4.2</li>
               <li>Fastjson 1.2.83</li>
+              <li>HuTool 5.0.6</li>
+              <li>Lombok 1.18.24</li>
+              <li>Mapstruct 1.5.0.RC1</li>
+              <li>Druid 1.1.10</li>
+              <li>Quartz</li>
+              <li>RuoYi</li>
               <li>...</li>
             </ul>
           </el-col>
@@ -37,11 +40,8 @@
             <h4>前端技术</h4>
             <ul>
               <li>Vue3</li>
-<!--              <li>Vuex</li>-->
-<!--              <li>Element-ui</li>-->
-<!--              <li>Axios</li>-->
-<!--              <li>Sass</li>-->
-<!--              <li>Quill</li>-->
+              <li>Element-Plus</li>
+              <li>webpack</li>
               <li>...</li>
             </ul>
           </el-col>

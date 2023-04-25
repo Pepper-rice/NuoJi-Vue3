@@ -28,6 +28,7 @@ export function addPhone(data) {
 
 // 修改手机
 export function updatePhone(data) {
+  console.log(data)
   return request({
     url: '/store/phone',
     method: 'put',

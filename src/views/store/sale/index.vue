@@ -10,10 +10,10 @@
             @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="手机id" prop="phoneId">
+      <el-form-item label="手机ID" prop="phoneId">
         <el-input
             v-model="queryParams.phoneId"
-            placeholder="请输入手机id"
+            placeholder="请输入手机ID"
             clearable
             style="width: 200px"
             @keyup.enter.native="handleQuery"
@@ -50,7 +50,7 @@
             icon="Plus"
             @click="handleAdd"
             v-hasPermi="['store:sale:add']"
-        >新增</el-button>
+        >购买</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -88,7 +88,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="销售id" align="center" prop="saleId" />
       <el-table-column label="客户名称" align="center" prop="customerName" />
-      <el-table-column label="手机id" align="center" prop="phoneId" />
+      <el-table-column label="手机ID" align="center" prop="phoneId" />
       <el-table-column label="销售数量" align="center" prop="saleQuantity" />
       <el-table-column label="销售总价" align="center" prop="salePrice" />
       <el-table-column label="备注" align="center" prop="remark" />
@@ -120,17 +120,11 @@
         <el-form-item label="客户名称" prop="customerName">
           <el-input v-model="form.customerName" placeholder="请输入客户名称" />
         </el-form-item>
-        <el-form-item label="手机id" prop="phoneId">
-          <el-input v-model="form.phoneId" placeholder="请输入手机id" />
+        <el-form-item label="手机ID" prop="phoneId">
+          <el-input v-model="form.phoneId" placeholder="请输入手机ID" />
         </el-form-item>
         <el-form-item label="销售数量" prop="saleQuantity">
           <el-input v-model="form.saleQuantity" placeholder="请输入销售数量" />
-        </el-form-item>
-        <el-form-item label="销售总价" prop="salePrice">
-          <el-input v-model="form.salePrice" placeholder="请输入销售总价" />
-        </el-form-item>
-        <el-form-item label="删除标志" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入删除标志" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -148,6 +142,7 @@
 
 <script setup name="Sale">
 import { listSale, getSale, delSale, addSale, updateSale } from "@/api/store/sale";
+import {onMounted, onUnmounted} from "vue";
 
 const { proxy } = getCurrentInstance();
 const { sys_normal_disable } = proxy.useDict("sys_normal_disable");
@@ -173,11 +168,37 @@ const data = reactive({
   },
   //表单校验
   rules: {
-    saleId: [{ required: true, message: "销售id不能为空", trigger: "blur" }],
+    saleId: [{ required: true, message: "销售ID不能为空", trigger: "blur" }],
+    customerName: [{ required: true, message: "客戶名称不能为空", trigger: "blur" }],
+    phoneId: [{ required: true, message: "手机ID不能为空", trigger: "blur" }],
+    saleQuantity: [{ required: true, message: "销售数量不能为空", trigger: "blur" }],
   }
 });
 
+
+
 const { queryParams, form, rules } = toRefs(data);
+
+/** 设置定时器 */
+let timer = null
+onMounted(() => {
+      getList();
+      setTimer();
+    },
+)
+onUnmounted(() => {
+  if (timer) {
+    clearInterval(timer);
+  }
+})
+
+function setTimer() {
+  //在上面的私有变量中定义定时器变量，在这里赋值
+  timer = setInterval(()=>{
+    //任务内容
+    getList();
+  },3000)
+}
 
 /** 查询销售列表 */
 function getList() {
@@ -225,16 +246,18 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加手机";
+  title.value = "添加订单";
 }
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
+  queryParams.value.pageNum = 1;
+  getList();
   const saleId = row.saleId || ids.value;
   getSale(saleId).then(response => {
-    form.value = response.data;
-    open.value = true;
-    title.value = "修改手机";
+  //   form.value = response.data;
+  //   open.value = true;
+    title.value = "查看订单";
   });
 }
 /** 提交按钮 */
@@ -260,7 +283,7 @@ function submitForm() {
 /** 删除按钮操作 */
 function handleDelete(row) {
   const saleIds = row.saleId || ids.value;
-  proxy.$modal.confirm('是否确认删除手机编号为"' + saleIds + '"的数据项？').then(function() {
+  proxy.$modal.confirm('是否确认删除订单编号为"' + saleIds + '"的数据项？').then(function() {
     return delSale(saleIds);
   }).then(() => {
     getList();
